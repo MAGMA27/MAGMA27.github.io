@@ -1,0 +1,119 @@
+{
+  "site": {
+    "url": "https://MAGMA27.github.io",
+    "title": "MAGMA27-BLOG",
+    "description": "An engineer's blog.",
+    "keywords": "MAGMA27,blog,Astro,engineering,technology",
+    "lang": "zh-CN",
+    "favicon": "/favicon.ico",
+    "appleTouchIcon": "/apple-touch-icon.png"
+  },
+  "author": {
+    "name": "MAGMA27",
+    "twitterId": "@lxchapu",
+    "avatar": "/avatar.png"
+  },
+  "hero": {
+    "name": "MAGMA27",
+    "bio": "An engineer.",
+    "description": "Do only one thing at a time.",
+    "socials": [
+      {
+        "name": "Github",
+        "icon": "icon-github",
+        "url": "https://github.com/MAGMA27",
+        "color": "rgb(24, 23, 23)"
+      },
+      {
+        "name": "X",
+        "icon": "icon-x",
+        "url": "https://x.com/fngln673930",
+        "color": "rgb(36, 46, 54)"
+      },
+      {
+        "name": "Email",
+        "icon": "icon-mail",
+        "url": "mailto:qiuzihao1117@foxmail.com",
+        "color": "rgb(212, 70, 56)"
+      }
+    ],
+    "yiyan": "在坚冰还覆盖着北海的时候，我看到了怒放的梅花。"
+  },
+  "color": {
+    "accent": [
+      { "light": "#F55555", "dark": "#FCCF31" },
+      { "light": "#0396FF", "dark": "#ABDCFF" },
+      { "light": "#fb7287", "dark": "#99D8CF" },
+      { "light": "#F072B6", "dark": "#FFF886" },
+      { "light": "#9F44D3", "dark": "#E2B0FF" },
+      { "light": "#FF6666", "dark": "#A1CCD1" },
+      { "light": "#F6416C", "dark": "#838BC6" },
+      { "light": "#32CCBC", "dark": "#90F7EC" },
+      { "light": "#33A6B8", "dark": "#79F1A4" },
+      { "light": "#F55555", "dark": "#FCCF31" }
+    ],
+    "bg": {
+      "primary": { "light": "#ffffff", "dark": "#1c1c1e" },
+      "secondary": { "light": "#f4f4f5", "dark": "#27272a" }
+    },
+    "text": {
+      "primary": { "light": "#373a3c", "dark": "#ffffff" },
+      "secondary": { "light": "#71717a", "dark": "#d1d5db" }
+    },
+    "border": {
+      "primary": { "light": "#e4e4e7", "dark": "#3f3f46" }
+    }
+  },
+  "menus": [
+    {
+      "name": "Homepage",
+      "link": "/",
+      "icon": "icon-pantone"
+    },
+    {
+      "name": "Archives",
+      "link": "/archives",
+      "icon": "icon-archive"
+    },
+    {
+      "name": "Projects",
+      "link": "/projects",
+      "icon": "icon-flask"
+    },
+    {
+      "name": "About",
+      "link": "/about",
+      "icon": "icon-ghost"
+    },
+    {
+      "name": "Links",
+      "link": "/friends",
+      "icon": "icon-hearts"
+    }
+  ],
+  "posts": {
+    "perPage": 10
+  },
+  "footer": {
+    "startTime": "2026-05-20T20:30:00Z"
+  },
+  "waline": {
+    "serverURL": ""
+  },
+  "sponsor": {
+    "wechat": "/03c76ff8950604981a48afb9473d13b.jpg"
+  },
+  "analytics": {
+    "enable": false,
+    "google": {
+      "measurementId": ""
+    },
+    "umami": {
+      "serverUrl": "",
+      "websiteId": ""
+    },
+    "microsoftClarity": {
+      "projectId": ""
+    }
+  }
+}
