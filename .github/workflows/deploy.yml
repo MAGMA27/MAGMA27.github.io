@@ -28,9 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build with Astro
-        uses: withastro/action@v0  # 使用官方的 Astro Action
+        uses: withastro/action@v5   # ✅ 从 v0 升级到 v5
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4   # ✅ 从 v3 升级到 v4
         with:
           path: ./dist
   deploy:
@@ -42,4 +42,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4   # 这个保持 v4 即可（它用的是内部新版本）
