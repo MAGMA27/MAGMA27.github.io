@@ -1,3 +1,9 @@
+# 基于 Gyoza 的模板构建的个人博客
+
+原始内容如下
+
+---
+
 # Gyoza
 
 Gyoza is a static blog template built with Astro and React.
