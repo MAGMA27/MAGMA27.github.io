@@ -21,13 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ✅ 先安装 pnpm（必须在 setup-node 之前）
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9   # 与你的项目锁文件匹配，也可以写 9
+          version: 9
 
-      # ✅ 再设置 Node，此时 pnpm 已存在，cache 就能正常工作了
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -36,6 +34,8 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          PNPM_APPROVE_BUILDS: true   # 🔑 关键：自动批准构建脚本
 
       - name: Build with Astro
         uses: withastro/action@v5
