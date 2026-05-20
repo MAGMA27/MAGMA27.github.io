@@ -1,0 +1,4 @@
+title: 从零构建transformer语言模型
+description: 基于斯坦福CS336课程项目，从零构建BPE、tokenizer、Transformer语言模型，并实现DDP并行训练功能
+link: https://github.com/MAGMA27/assignment1-basics
+image: https://cdn4.winhlb.com/2026/05/20/6a0dbdd51263b.png
