@@ -1,4 +1,0 @@
-title: LLM的SFT与GRPO微调
-description: 基于斯坦福CS336课程项目，实现基于transformers库与qwen2.5-math-1.5B基座模型的SFT与GRPO微调算法
-link: https://github.com/MAGMA27/assignment5-alignment
-image: https://cdn4.winhlb.com/2026/05/20/6a0dbddc289d3.png
