@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { animate } from 'framer-motion'
 import { getDaysInYear, getDiffInDays, getStartOfDay, getStartOfYear } from '@/utils/date'
+import { t, type Locale } from '@/i18n'
 
-export function TimelineProgress() {
+export function TimelineProgress({ locale = 'zh-cn' }: { locale?: Locale }) {
   const [currentYear, setCurrentYear] = useState(0)
   const [dayOfYear, setDayOfYear] = useState(0)
   const [percentOfYear, setPercentOfYear] = useState(0)
@@ -31,13 +32,15 @@ export function TimelineProgress() {
   return (
     <>
       <p className="mt-4">
-        今天是 {currentYear} 年的第 <CountUp to={dayOfYear} decimals={0} /> 天
+        {t(locale, 'timelineDayPrefix', { year: currentYear })}{' '}
+        <CountUp to={dayOfYear} decimals={0} /> {t(locale, 'timelineDaySuffix', { year: currentYear })}
       </p>
       <p className="mt-4">
-        今年已过 <CountUp to={percentOfYear} decimals={5} />%
+        {t(locale, 'timelineYearProgress', { year: currentYear })}{' '}
+        <CountUp to={percentOfYear} decimals={5} />%
       </p>
       <p className="mt-4">
-        今天已过 <CountUp to={percentOfToday} decimals={5} />%
+        {t(locale, 'timelineTodayProgress')} <CountUp to={percentOfToday} decimals={5} />%
       </p>
     </>
   )

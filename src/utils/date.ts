@@ -1,29 +1,40 @@
+import type { Locale } from '@/i18n'
+
 // 获取两个日期的相对时间
-export function getRelativeTime(startDate: Date, endDate = new Date()) {
+export function getRelativeTime(startDate: Date, endDate = new Date(), locale: Locale = 'zh-cn') {
   const diffSeconds = Math.floor((endDate.getTime() - startDate.getTime()) / 1000)
   if (diffSeconds < 0) {
     return null
   }
   const diffMinutes = Math.floor(diffSeconds / 60)
   if (diffMinutes < 10) {
-    return '刚刚'
+    return locale === 'en' ? 'just now' : '刚刚'
   }
   if (diffMinutes < 60) {
-    return `${diffMinutes} 分钟前`
+    return locale === 'en' ? `${diffMinutes} minutes ago` : `${diffMinutes} 分钟前`
   }
   const diffHours = Math.floor(diffMinutes / 60)
   if (diffHours < 24) {
-    return `${diffHours} 小时前`
+    return locale === 'en' ? `${diffHours} hours ago` : `${diffHours} 小时前`
   }
   const diffDays = Math.floor(diffHours / 24)
   if (diffDays < 10) {
-    return `${diffDays} 天前`
+    return locale === 'en' ? `${diffDays} days ago` : `${diffDays} 天前`
   }
   return null
 }
 
 // 获取一个格式化的日期，格式为：2024 年 1 月 1 日 星期一
-export function getFormattedDate(date: Date) {
+export function getFormattedDate(date: Date, locale: Locale = 'zh-cn') {
+  if (locale === 'en') {
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long',
+    }).format(date)
+  }
+
   const year = date.getFullYear() % 100
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -38,12 +49,16 @@ function padZero(number: number, len = 2) {
 }
 
 // 获取格式化后的日期时间，格式：2024 年 01 月 01 日 12:00
-export function getFormattedDateTime(date: Date) {
+export function getFormattedDateTime(date: Date, locale: Locale = 'zh-cn') {
   const year = date.getFullYear()
   const month = padZero(date.getMonth() + 1)
   const day = padZero(date.getDate())
   const hours = padZero(date.getHours())
   const minutes = padZero(date.getMinutes())
+
+  if (locale === 'en') {
+    return `${month}/${day}/${year} ${hours}:${minutes}`
+  }
 
   return `${year} 年 ${month} 月 ${day} 日 ${hours}:${minutes}`
 }

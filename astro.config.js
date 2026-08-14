@@ -17,14 +17,30 @@ import { site } from './src/config.json'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import swup from '@swup/astro'
+import { defaultLocale, localeHtmlLang, locales } from './src/i18n'
 
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
+  i18n: {
+    locales: [...locales],
+    defaultLocale,
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     tailwind(),
     react(),
-    sitemap(),
+    sitemap({
+      i18n: {
+        defaultLocale,
+        locales: {
+          'zh-cn': localeHtmlLang['zh-cn'],
+          en: localeHtmlLang.en,
+        },
+      },
+    }),
     swup({
       theme: false,
       animationClass: 'swup-transition-',

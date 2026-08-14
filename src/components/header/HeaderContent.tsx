@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { menus } from '@/config.json'
 import { clsx } from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
@@ -9,17 +8,18 @@ import {
   useShouldHeaderMetaShow,
 } from './hooks'
 import { RootPortal } from '@/components/RootPortal'
+import { getMenuItems, type Locale } from '@/i18n'
 
-export function HeaderContent() {
+export function HeaderContent({ locale }: { locale: Locale }) {
   return (
     <>
-      <AnimatedMenu />
-      <AccessibleMenu />
+      <AnimatedMenu locale={locale} />
+      <AccessibleMenu locale={locale} />
     </>
   )
 }
 
-function AnimatedMenu() {
+function AnimatedMenu({ locale }: { locale: Locale }) {
   const shouldBgShow = useShouldHeaderMenuBgShow()
   const shouldHeaderMetaShow = useShouldHeaderMetaShow()
 
@@ -27,14 +27,14 @@ function AnimatedMenu() {
     <AnimatePresence>
       {!shouldHeaderMetaShow && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <HeaderMenu isBgShow={shouldBgShow} />
+          <HeaderMenu isBgShow={shouldBgShow} locale={locale} />
         </motion.div>
       )}
     </AnimatePresence>
   )
 }
 
-function AccessibleMenu() {
+function AccessibleMenu({ locale }: { locale: Locale }) {
   const shouldShow = useShouldAccessibleMenuShow()
 
   return (
@@ -47,7 +47,7 @@ function AccessibleMenu() {
             animate={{ y: 0 }}
             exit={{ y: -20, opacity: 0 }}
           >
-            <HeaderMenu isBgShow />
+            <HeaderMenu isBgShow locale={locale} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -55,8 +55,9 @@ function AccessibleMenu() {
   )
 }
 
-function HeaderMenu({ isBgShow }: { isBgShow: boolean }) {
+function HeaderMenu({ isBgShow, locale }: { isBgShow: boolean; locale: Locale }) {
   const pathName = usePathName()
+  const menus = getMenuItems(locale)
   const [mouseX, setMouseX] = useState(0)
   const [mouseY, setMouseY] = useState(0)
   const [radius, setRadius] = useState(0)

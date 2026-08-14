@@ -1,21 +1,17 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { getAllTags, getOldestPosts, slugify } from '@/utils/content'
-import PageLayout from '@/layouts/PageLayout.astro'
-import Timeline from '@/components/Timeline.astro'
-import Highlight from '@/components/Highlight.astro'
+import TagPage from '@/components/pages/TagPage.astro'
+import { getAllTags } from '@/utils/content'
+import { defaultLocale } from '@/i18n'
 
 export const getStaticPaths = (async () => {
-  const allTags = await getAllTags()
+  const locale = defaultLocale
+  const allTags = await getAllTags(locale)
 
-  return allTags.map((tag) => {
-    return {
-      params: {
-        tag: tag.slug,
-      },
-      props: { tag },
-    }
-  })
+  return allTags.map((tag) => ({
+    params: { tag: tag.slug },
+    props: { tag, locale },
+  }))
 }) satisfies GetStaticPaths
 
 interface Props {
@@ -24,23 +20,10 @@ interface Props {
     slug: string
     count: number
   }
+  locale: typeof defaultLocale
 }
 
-const { tag } = Astro.props
-
-const oldestPosts = await getOldestPosts().then((posts) => {
-  return posts.filter((post) => post.data.tags.findIndex((t) => slugify(t) === tag.slug) >= 0)
-})
+const { tag, locale } = Astro.props
 ---
 
-<PageLayout title={`标签 · ${tag.name}`}>
-  <div class="max-w-[800px] mx-auto px-4 py-16">
-    <header class="space-y-4 mb-8">
-      <h1 class="text-4xl font-bold">
-        标签：<Highlight>{tag.name}</Highlight>
-      </h1>
-      <p>共有 {tag.count} 篇文章。</p>
-    </header>
-    <Timeline posts={oldestPosts} />
-  </div>
-</PageLayout>
+<TagPage tag={tag} locale={locale} />

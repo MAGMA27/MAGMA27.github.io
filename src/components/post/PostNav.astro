@@ -1,20 +1,26 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import { getContentSlug, localePath, normalizeLocale, type Locale } from '@/i18n'
 
 interface Props {
   prev?: CollectionEntry<'posts'>
   next?: CollectionEntry<'posts'>
   class?: string
+  locale?: Locale
 }
 
-const { prev, next, class: className } = Astro.props
+const { prev, next, class: className, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 <div class="grid grid-cols-2" class:list={[className]}>
   <div>
     {
       prev && (
-        <a class="flex items-baseline gap-2 hover:text-accent" href={`/posts/${prev.slug}`}>
+        <a
+          class="flex items-baseline gap-2 hover:text-accent"
+          href={localePath(locale, `/posts/${getContentSlug(prev)}`)}
+        >
           <i class="iconfont icon-arrow-left" />
           <span>{prev.data.title}</span>
         </a>
@@ -26,7 +32,7 @@ const { prev, next, class: className } = Astro.props
       next && (
         <a
           class="flex items-baseline justify-end gap-2 hover:text-accent"
-          href={`/posts/${next.slug}`}
+          href={localePath(locale, `/posts/${getContentSlug(next)}`)}
         >
           <span>{next.data.title}</span>
           <i class="iconfont icon-arrow-right" />

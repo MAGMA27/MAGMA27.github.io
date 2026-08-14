@@ -1,0 +1,29 @@
+---
+import Timeline from '@/components/Timeline.astro'
+import Highlight from '@/components/Highlight.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import { getOldestPosts } from '@/utils/content'
+import { TimelineProgress } from '@/components/TimelineProgress'
+import { t, type Locale } from '@/i18n'
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const oldestPosts = await getOldestPosts(locale)
+---
+
+<PageLayout title={t(locale, 'navArchives')} locale={locale}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-8">
+      <h1 class="text-4xl font-bold">
+        <Highlight>{t(locale, 'navArchives')}</Highlight>
+      </h1>
+      <p>{t(locale, 'postCount', { count: oldestPosts.length })}</p>
+      <hr class="w-[100px] border-primary" />
+      <TimelineProgress locale={locale} client:load />
+    </header>
+    <Timeline posts={oldestPosts} locale={locale} />
+  </div>
+</PageLayout>

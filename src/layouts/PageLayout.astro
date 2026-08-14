@@ -3,24 +3,30 @@ import Layout from './Layout.astro'
 import { Header } from '@/components/header/Header'
 import Footer from '@/components/footer/Footer.astro'
 import { Provider } from '@/components/provider/Provider'
+import { normalizeLocale, type Locale } from '@/i18n'
+import { getLocalizedPath } from '@/utils/localized-path'
 
 interface Props {
   title?: string
   description?: string
   image?: string
+  locale?: Locale
 }
 
-const { title, description, image } = Astro.props
+const { title, description, image, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
+const targetLocale = locale === 'en' ? 'zh-cn' : 'en'
+const languagePath = await getLocalizedPath(Astro.url.pathname, locale, targetLocale)
 ---
 
-<Layout title={title} description={description} image={image}>
-  <Provider pathName={Astro.url.pathname} client:only="react" />
+<Layout title={title} description={description} image={image} locale={locale}>
+  <Provider pathName={Astro.url.pathname} languagePath={languagePath} client:only="react" />
 
-  <Header client:only="react" />
+  <Header locale={locale} languagePath={languagePath} client:only="react" />
   <main class="relative z-1 pt-16 min-h-main bg-primary">
     <div class="swup-transition-fade">
       <slot />
     </div>
   </main>
-  <Footer />
+  <Footer locale={locale} />
 </Layout>

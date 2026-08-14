@@ -1,8 +1,12 @@
 import { z, defineCollection } from 'astro:content'
 
+const localeSchema = z.enum(['zh-cn', 'en']).default('zh-cn')
+
 const postsCollection = defineCollection({
   type: 'content',
   schema: z.object({
+    locale: localeSchema,
+    translationKey: z.string().optional(),
     title: z.string(),
     date: z.date(),
     lastMod: z.date().optional(),
@@ -19,6 +23,8 @@ const postsCollection = defineCollection({
 const projectsCollection = defineCollection({
   type: 'data',
   schema: z.object({
+    locale: localeSchema,
+    translationKey: z.string().optional(),
     title: z.string(),
     description: z.string(),
     image: z.string(),
@@ -29,6 +35,8 @@ const projectsCollection = defineCollection({
 const specCollection = defineCollection({
   type: 'content',
   schema: z.object({
+    locale: localeSchema,
+    translationKey: z.string().optional(),
     title: z.string(),
     description: z.string(),
     comments: z.boolean().default(true),
@@ -38,6 +46,8 @@ const specCollection = defineCollection({
 const friendsCollection = defineCollection({
   type: 'data',
   schema: z.object({
+    locale: localeSchema,
+    translationKey: z.string().optional(),
     title: z.string(),
     description: z.string(),
     avatar: z.string(),

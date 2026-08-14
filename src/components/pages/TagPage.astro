@@ -1,0 +1,33 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import { getOldestPosts, slugify } from '@/utils/content'
+import Timeline from '@/components/Timeline.astro'
+import Highlight from '@/components/Highlight.astro'
+import { t, type Locale } from '@/i18n'
+
+interface Props {
+  tag: {
+    name: string
+    slug: string
+    count: number
+  }
+  locale: Locale
+}
+
+const { tag, locale } = Astro.props
+const oldestPosts = await getOldestPosts(locale).then((posts) => {
+  return posts.filter((post) => post.data.tags.findIndex((value) => slugify(value) === tag.slug) >= 0)
+})
+---
+
+<PageLayout title={`${t(locale, 'tags')} · ${tag.name}`} locale={locale}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-8">
+      <h1 class="text-4xl font-bold">
+        {t(locale, 'tagPrefix')}<Highlight>{tag.name}</Highlight>
+      </h1>
+      <p>{t(locale, 'postsCount', { count: tag.count })}</p>
+    </header>
+    <Timeline posts={oldestPosts} locale={locale} />
+  </div>
+</PageLayout>

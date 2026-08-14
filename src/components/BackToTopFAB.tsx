@@ -1,19 +1,20 @@
 import { useAtomValue } from 'jotai'
 import { pageScrollLocationAtom } from '@/store/scrollInfo'
 import { AnimatePresence, motion } from 'framer-motion'
+import { t, type Locale } from '@/i18n'
 
-export function BackToTopFAB() {
+export function BackToTopFAB({ locale = 'zh-cn' }: { locale?: Locale }) {
   const scrollY = useAtomValue(pageScrollLocationAtom)
   const isShow = scrollY > 100
 
   return (
     <div className="fixed right-4 bottom-6 z-10">
-      <AnimatePresence>{isShow && <BackToTop />}</AnimatePresence>
+      <AnimatePresence>{isShow && <BackToTop locale={locale} />}</AnimatePresence>
     </div>
   )
 }
 
-function BackToTop() {
+function BackToTop({ locale }: { locale: Locale }) {
   const handleBackToTop = () => {
     window.scrollTo({
       top: 0,
@@ -25,7 +26,7 @@ function BackToTop() {
     <motion.button
       className="size-10 rounded-full shadow-lg shadow-zinc-800/5 border border-primary bg-white/50 dark:bg-zinc-800/50 backdrop-blur"
       type="button"
-      aria-label="Back to top"
+      aria-label={t(locale, 'backToTop')}
       onClick={handleBackToTop}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}

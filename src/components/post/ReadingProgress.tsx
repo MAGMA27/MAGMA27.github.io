@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useAtomValue } from 'jotai'
 import { pageScrollLocationAtom } from '@/store/scrollInfo'
 import { floor } from 'lodash-es'
+import { t, type Locale } from '@/i18n'
 
-export function ReadingProgress() {
+export function ReadingProgress({ locale = 'zh-cn' }: { locale?: Locale }) {
   const [percent, setPercent] = useState(0)
   const scrollY = useAtomValue(pageScrollLocationAtom)
 
@@ -23,7 +24,7 @@ export function ReadingProgress() {
 
   return (
     <div>
-      <span className="text-sm">进度 {percent}%</span>
+      <span className="text-sm">{t(locale, 'readingProgress', { percent })}</span>
     </div>
   )
 }

@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from 'astro'
+import TagPage from '@/components/pages/TagPage.astro'
+import { getAllTags } from '@/utils/content'
+
+export const getStaticPaths = (async () => {
+  const allTags = await getAllTags('en')
+
+  return allTags.map((tag) => ({
+    params: { tag: tag.slug },
+    props: { tag, locale: 'en' },
+  }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  tag: {
+    name: string
+    slug: string
+    count: number
+  }
+  locale: 'en'
+}
+
+const { tag } = Astro.props
+---
+
+<TagPage tag={tag} locale="en" />

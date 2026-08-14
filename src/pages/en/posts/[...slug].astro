@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import PostPage from '@/components/pages/PostPage.astro'
+import { getSortedPosts } from '@/utils/content'
+import { getContentSlug } from '@/i18n'
+
+export const getStaticPaths = (async () => {
+  const sortedPosts = await getSortedPosts('en')
+
+  return sortedPosts.map((post, index) => ({
+    params: { slug: getContentSlug(post) },
+    props: {
+      current: post,
+      prev: index > 0 ? sortedPosts[index - 1] : undefined,
+      next: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined,
+      locale: 'en',
+    },
+  }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  current: CollectionEntry<'posts'>
+  prev?: CollectionEntry<'posts'>
+  next?: CollectionEntry<'posts'>
+  locale: 'en'
+}
+
+const { current, prev, next } = Astro.props
+---
+
+<PostPage current={current} prev={prev} next={next} locale="en" />

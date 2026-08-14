@@ -1,12 +1,14 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import PostCard from './PostCard.astro'
+import type { Locale } from '@/i18n'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
+  locale?: Locale
 }
 
-const { posts } = Astro.props
+const { posts, locale } = Astro.props
 ---
 
 <div>
@@ -14,7 +16,7 @@ const { posts } = Astro.props
     {
       posts.map((post) => (
         <li>
-          <PostCard entry={post} />
+        <PostCard entry={post} locale={locale} />
         </li>
       ))
     }

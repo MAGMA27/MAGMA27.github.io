@@ -1,7 +1,14 @@
 ---
 import { getCollection } from 'astro:content'
+import { normalizeLocale, t, type Locale } from '@/i18n'
 
-const friends = await getCollection('friends')
+interface Props {
+  locale?: Locale
+}
+
+const { locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
+const friends = await getCollection('friends', ({ data }) => data.locale === locale)
 ---
 
 <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
@@ -13,7 +20,7 @@ const friends = await getCollection('friends')
             <img
               class="shrink-0 size-16 object-contain rounded-full"
               src={friend.data.avatar}
-              alt={`Friend avatar: ${friend.data.title}`}
+              alt={t(locale, 'friendAvatar', { value: friend.data.title })}
               loading="lazy"
             />
             <div class="min-w-0 grow">

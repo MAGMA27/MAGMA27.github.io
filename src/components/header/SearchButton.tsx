@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useCurrentModal, useModal } from '@/components/ui/modal'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from '@/hooks/useDebounceValue'
+import { t, type Locale } from '@/i18n'
 
 let pagefind: any = null
 async function loadPagefind() {
@@ -11,12 +12,12 @@ async function loadPagefind() {
   }
 }
 
-export function SearchButton() {
+export function SearchButton({ locale }: { locale: Locale }) {
   const { present } = useModal()
 
   const openModal = () => {
     present({
-      content: <SearchPanel />,
+      content: <SearchPanel locale={locale} />,
     })
   }
 
@@ -26,7 +27,7 @@ export function SearchButton() {
     <button
       className="size-9 rounded-full shadow-lg shadow-zinc-800/5 border border-primary bg-white/50 dark:bg-zinc-800/50 backdrop-blur"
       type="button"
-      aria-label="Search"
+      aria-label={t(locale, 'search')}
       onClick={openModal}
     >
       <i className="iconfont icon-search"></i>
@@ -34,7 +35,7 @@ export function SearchButton() {
   )
 }
 
-function SearchPanel() {
+function SearchPanel({ locale }: { locale: Locale }) {
   const [keyword, setKeyword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<any[]>([])
@@ -73,8 +74,8 @@ function SearchPanel() {
             />
           </svg>
           <div>
-            <div className="font-semibold mb-1">抱歉</div>
-            <div className="text-sm">该功能基于 pagefind，请在构建后再次尝试。</div>
+            <div className="font-semibold mb-1">{t(locale, 'searchUnavailableTitle')}</div>
+            <div className="text-sm">{t(locale, 'searchUnavailable')}</div>
           </div>
         </div>
       </div>
@@ -116,14 +117,16 @@ function SearchPanel() {
               d="M11 11v2l-5.327 6H11v2H3v-2l5.326-6H3v-2zm10-8v2l-5.327 6H21v2h-8v-2l5.326-6H13V3z"
             />
           </svg>
-          <div>无内容</div>
+          <div>{t(locale, 'searchNoResults')}</div>
         </div>
       </div>
     )
   } else {
     resultList = (
       <>
-        <div className="text-sm px-3 mb-2">找到以下 {results.length} 条结果</div>
+        <div className="text-sm px-3 mb-2">
+          {t(locale, 'searchResults', { count: results.length })}
+        </div>
         {results.map((item) => {
           return (
             <a
@@ -151,7 +154,7 @@ function SearchPanel() {
       <input
         className="px-4 py-3 outline-none bg-transparent border-b border-primary"
         type="text"
-        placeholder="Search..."
+        placeholder={t(locale, 'searchPlaceholder')}
         maxLength={64}
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
@@ -164,7 +167,7 @@ function SearchPanel() {
           rel="noopener noreferrer"
           className="flex items-center "
         >
-          <span className="mr-2 text-xs">Search by</span>
+          <span className="mr-2 text-xs">{t(locale, 'searchBy')}</span>
           <span className="font-semibold">pagefind</span>
         </a>
       </div>

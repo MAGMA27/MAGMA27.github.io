@@ -5,6 +5,7 @@ import { ViewportProvider } from './ViewportProvider'
 
 export function Provider(props: {
   pathName: string
+  languagePath: string
   title?: string
   description?: string
   slug?: string

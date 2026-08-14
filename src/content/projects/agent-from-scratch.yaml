@@ -1,3 +1,4 @@
+translationKey: agent-from-scratch
 title: agent-from-scratch
 description: 不依赖langchain、langraph等框架，从零搭建一个agent应用。
 link: https://github.com/MAGMA27/agent-from-scratch

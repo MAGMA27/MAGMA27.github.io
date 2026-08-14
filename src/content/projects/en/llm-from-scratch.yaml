@@ -1,0 +1,6 @@
+locale: en
+translationKey: llm-from-scratch
+title: llm-from-scratch
+description: A Stanford CS336-inspired project that builds BPE, a tokenizer, and a Transformer language model from scratch, with DDP training and SFT/GRPO experiments.
+link: https://github.com/MAGMA27/llm-from-scratch
+image: https://cdn4.winhlb.com/2026/05/20/6a0dbdd51263b.png

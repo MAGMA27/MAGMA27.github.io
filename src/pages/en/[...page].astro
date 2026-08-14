@@ -1,0 +1,34 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import HomePage from '@/components/pages/HomePage.astro'
+import { getSortedPosts } from '@/utils/content'
+import appConfig from '@/config.json'
+
+export const getStaticPaths = (async () => {
+  const sortedPosts = await getSortedPosts('en')
+  const { perPage } = appConfig.posts
+  const totalPage = Math.ceil(sortedPosts.length / perPage)
+
+  return Array.from({ length: totalPage }).map((_, i) => ({
+    params: { page: i === 0 ? undefined : `page/${i + 1}` },
+    props: {
+      currentPage: i + 1,
+      totalPage,
+      data: sortedPosts.slice(i * perPage, (i + 1) * perPage),
+      locale: 'en',
+    },
+  }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  currentPage: number
+  totalPage: number
+  data: CollectionEntry<'posts'>[]
+  locale: 'en'
+}
+
+const { currentPage, totalPage, data } = Astro.props
+---
+
+<HomePage currentPage={currentPage} totalPage={totalPage} data={data} locale="en" />

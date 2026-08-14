@@ -3,6 +3,7 @@ import { getFormattedDateTime } from '@/utils/date'
 import { AnimatedSignature } from '../AnimatedSignature'
 import { useEffect, useState } from 'react'
 import { toast } from "react-toastify";
+import { t, type Locale } from '@/i18n'
 
 function getPostUrl(slug: string) {
   return new URL(slug, site.url).href
@@ -12,52 +13,58 @@ export function PostCopyright({
   title,
   slug,
   lastMod,
+  locale,
 }: {
   title: string
   slug: string
   lastMod: Date
+  locale: Locale
 }) {
   const [lastModStr, setLastModStr] = useState('')
   const url = getPostUrl(slug)
 
   function handleCopyUrl() {
     navigator.clipboard.writeText(url)
-    toast.success('已复制文章链接')
+    toast.success(t(locale, 'copiedPostLink'))
   }
 
   useEffect(() => {
-    setLastModStr(getFormattedDateTime(lastMod))
-  }, [lastMod])
+    setLastModStr(getFormattedDateTime(lastMod, locale))
+  }, [lastMod, locale])
 
   return (
     <section className="text-xs leading-loose text-secondary">
-      <p>文章标题：{title}</p>
-      <p>文章作者：{author.name}</p>
+      <p>{t(locale, 'postTitle', { value: title })}</p>
+      <p>{t(locale, 'postAuthor', { value: author.name })}</p>
       <p>
-        <span>文章链接：{url}</span>
+        <span>{t(locale, 'postLink', { value: url })}</span>
         <span role="button" className="cursor-pointer select-none" onClick={handleCopyUrl}>
-          [复制]
+          [{t(locale, 'copy')}]
         </span>
       </p>
-      <p>最后修改时间：{lastModStr}</p>
+      <p>{t(locale, 'lastUpdated', { value: lastModStr })}</p>
       <hr className="my-3 border-primary" />
       <div>
         <div className="float-right ml-4 my-2">
           <AnimatedSignature />
         </div>
         <p>
-          商业转载请联系站长获得授权，非商业转载请注明本文出处及文章链接，您可以自由地在任何媒体以任何形式复制和分发作品，也可以修改和创作，但是分发衍生作品时必须采用相同的许可协议。
+          {t(locale, 'commercialNotice')}
           <br />
-          本文采用
+          {t(locale, 'licenseIntro')}{' '}
           <a
             className="hover:underline hover:text-accent underline-offset-2"
-            href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+            href={
+              locale === 'en'
+                ? 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en'
+                : 'https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh'
+            }
             target="_blank"
             rel="noopener noreferrer"
           >
             CC BY-NC-SA 4.0
           </a>
-          进行许可。
+          {t(locale, 'licenseSuffix')}
         </p>
       </div>
     </section>

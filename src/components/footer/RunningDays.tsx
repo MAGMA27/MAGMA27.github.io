@@ -1,8 +1,9 @@
 import { useLayoutEffect, useState } from 'react'
 import { footer } from '@/config.json'
 import { getDiffInDays } from '@/utils/date'
+import { t, type Locale } from '@/i18n'
 
-export function RunningDays() {
+export function RunningDays({ locale = 'zh-cn' }: { locale?: Locale }) {
   const [days, setDays] = useState(0)
 
   useLayoutEffect(() => {
@@ -11,8 +12,8 @@ export function RunningDays() {
   }, [])
 
   if (days < 0) {
-    return <span>Ops! 网站还没有发布</span>
+    return <span>{t(locale, 'siteNotPublished')}</span>
   }
 
-  return <span>已经运行了 {days} 天</span>
+  return <span>{t(locale, 'runningDays', { count: days })}</span>
 }

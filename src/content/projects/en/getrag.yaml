@@ -1,0 +1,6 @@
+locale: en
+translationKey: getrag
+title: GetRAG
+description: A personal knowledge-base QA system built with LangChain and RAG, featuring hybrid retrieval, progressive query optimization, and multi-turn conversations.
+link: https://github.com/MAGMA27/GetRAG
+image: https://free.aiai.lat/2026/06/20/6a36892f7ed49.png

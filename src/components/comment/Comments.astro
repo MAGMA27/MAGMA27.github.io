@@ -1,8 +1,16 @@
 ---
 import { Waline } from './Waline'
 import { waline } from '@/config.json'
+import { normalizeLocale, type Locale } from '@/i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 <div>
-  {waline.serverURL && <Waline {...waline} client:visible />}
+  {waline.serverURL && <Waline {...waline} locale={locale} client:visible />}
 </div>

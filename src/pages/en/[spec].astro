@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import SpecPage from '@/components/pages/SpecPage.astro'
+import { getContentSlug } from '@/i18n'
+
+export const getStaticPaths = (async () => {
+  const specList = await getCollection('spec', ({ data }) => data.locale === 'en')
+
+  return specList.map((md) => ({
+    params: { spec: getContentSlug(md) },
+    props: { md, locale: 'en' },
+  }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  md: CollectionEntry<'spec'>
+  locale: 'en'
+}
+
+const { md } = Astro.props
+---
+
+<SpecPage md={md} locale="en" />

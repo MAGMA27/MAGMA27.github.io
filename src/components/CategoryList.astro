@@ -5,18 +5,21 @@ interface Props {
     slug: string
     count: number
   }[]
+  locale?: import('@/i18n').Locale
 }
 
-const { categories } = Astro.props
+const { categories, locale: localeProp } = Astro.props
+const { localePath, normalizeLocale, t } = await import('@/i18n')
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 {
   categories.length === 0 ? (
-    <div class="text-center text-sm">作者懒得分类🤪</div>
+    <div class="text-center text-sm">{t(locale, 'noCategories')}</div>
   ) : (
     <div class="space-y-2.5">
       {categories.map((category) => (
-        <a class="relative block group" href={`/categories/${category.slug}`}>
+        <a class="relative block group" href={localePath(locale, `/categories/${category.slug}`)}>
           <div class="absolute -z-1 inset-0 rounded-lg bg-accent/10 group-hover:transition group-hover:bg-accent/20 group-hover:scale-105" />
           <div class="px-2.5 py-2 text-sm flex gap-1 select-none">
             <i class="shrink-0 iconfont icon-folder" />

@@ -1,12 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { getShortDate } from '@/utils/date'
+import { getContentSlug, localePath, normalizeLocale, type Locale } from '@/i18n'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
+  locale?: Locale
 }
 
-const { posts } = Astro.props
+const { posts, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 
 const groupedPosts = posts.reduce<
   {
@@ -46,7 +49,7 @@ const groupedPosts = posts.reduce<
               </span>
               <a
                 class="hover:text-accent/80 hover:underline underline-offset-2"
-                href={`/posts/${post.slug}`}
+                href={localePath(locale, `/posts/${getContentSlug(post)}`)}
               >
                 {post.data.title}
               </a>

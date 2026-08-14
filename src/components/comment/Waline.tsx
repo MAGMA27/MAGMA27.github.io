@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { init } from '@waline/client'
 import '@waline/client/style'
+import { t, type Locale } from '@/i18n'
 
-export function Waline({ serverURL }: { serverURL: string }) {
+export function Waline({ serverURL, locale }: { serverURL: string; locale: Locale }) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export function Waline({ serverURL }: { serverURL: string }) {
       imageUploader: false,
       search: false,
       locale: {
-        placeholder: '发条友善的评论吧（支持 Markdown 语法）…',
+        placeholder: t(locale, 'commentPlaceholder'),
       },
       emoji: ['//unpkg.com/@waline/emojis@1.1.0/bilibili'],
     })

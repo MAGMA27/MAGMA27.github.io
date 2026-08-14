@@ -1,4 +1,5 @@
 ---
+translationKey: helloworld
 title: Hello world
 date: 2024-11-10
 lastMod: 2024-11-10T23:02:16.758Z

@@ -1,5 +1,6 @@
 ---
 import { RelativeDate } from './RelativeDate'
+import { normalizeLocale, t, type Locale } from '@/i18n'
 
 interface Props {
   date: Date
@@ -7,23 +8,25 @@ interface Props {
   words: number
   readingMinutes: number
   class?: string
+  locale?: Locale
 }
 
-const { date, lastMod, words, readingMinutes, class: className } = Astro.props
+const { date, lastMod, words, readingMinutes, class: className, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 <div class="flex flex-wrap gap-2 text-sm text-secondary" class:list={[className]}>
   <div>
     <i class="iconfont icon-calendar"></i>
-    <RelativeDate date={date} client:idle />
-    {lastMod && <span class="text-xs">(已编辑)</span>}
+    <RelativeDate date={date} locale={locale} client:idle />
+    {lastMod && <span class="text-xs">({t(locale, 'edited')})</span>}
   </div>
   <div>
     <i class="iconfont icon-file-list"></i>
-    <span>{words} 字</span>
+    <span>{words} {t(locale, 'words')}</span>
   </div>
   <div>
     <i class="iconfont icon-timer"></i>
-    <span>{Math.ceil(readingMinutes)} 分钟</span>
+    <span>{Math.ceil(readingMinutes)} {t(locale, 'minutes')}</span>
   </div>
 </div>

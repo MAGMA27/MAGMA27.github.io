@@ -1,3 +1,4 @@
+translationKey: llm-from-scratch
 title: llm-from-scratch
 description: 基于斯坦福CS336课程项目，从零构建BPE、tokenizer、Transformer语言模型，并实现DDP并行训练功能，此外，还实现了基于transformers库与qwen2.5-math-1.5B基座模型的SFT与GRPO微调算法
 link: https://github.com/MAGMA27/llm-from-scratch

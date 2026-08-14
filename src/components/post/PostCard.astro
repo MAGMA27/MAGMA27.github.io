@@ -2,17 +2,21 @@
 import type { CollectionEntry } from 'astro:content'
 import { PostCardHoverOverlay } from './PostCardHoverOverlay'
 import PostMetaInfo from './PostMetaInfo.astro'
+import { getContentSlug, localePath, normalizeLocale, t, type Locale } from '@/i18n'
 
 interface Props {
   entry: CollectionEntry<'posts'>
+  locale?: Locale
 }
 
-const { entry } = Astro.props
+const { entry, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
+const slug = getContentSlug(entry)
 
 const { remarkPluginFrontmatter } = await entry.render()
 ---
 
-<a class="block relative py-8 focus-visible:outline-0" href={`/posts/${entry.slug}`}>
+<a class="block relative py-8 focus-visible:outline-0" href={localePath(locale, `/posts/${slug}`)}>
   <PostCardHoverOverlay client:only="react" />
   <h2 class="relative text-2xl font-bold">
     {entry.data.title}
@@ -38,13 +42,14 @@ const { remarkPluginFrontmatter } = await entry.render()
   <div class="mt-2 flex flex-wrap items-center justify-end gap-4 select-none">
     <PostMetaInfo
       class="grow"
+      locale={locale}
       date={entry.data.date}
       lastMod={entry.data.lastMod}
       words={remarkPluginFrontmatter.words}
       readingMinutes={remarkPluginFrontmatter.readingMinutes}
     />
     <div class="group shrink-0 text-accent flex items-center gap-2">
-      <span>继续阅读</span>
+      <span>{t(locale, 'continueReading')}</span>
       <svg width="36" height="12" viewBox="0 0 36 12" fill="none" class="stroke-current">
         <path
           d="M0.75 6H11.25 M6 0.75L11.25 6L6 11.25"

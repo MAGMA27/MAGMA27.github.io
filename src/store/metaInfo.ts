@@ -4,6 +4,7 @@ export const pathNameAtom = atom('')
 export const metaTitleAtom = atom('')
 export const metaDescriptionAtom = atom('')
 export const metaSlugAtom = atom('')
+export const languagePathAtom = atom('')
 
 export const hasMetaInfoAtom = atom((get) => {
   const title = get(metaTitleAtom)

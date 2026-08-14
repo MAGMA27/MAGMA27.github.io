@@ -1,0 +1,6 @@
+locale: en
+translationKey: agent-from-scratch
+title: agent-from-scratch
+description: An agent application built from scratch without relying on frameworks such as LangChain or LangGraph.
+link: https://github.com/MAGMA27/agent-from-scratch
+image: https://cdn4.winhlb.com/2026/05/29/6a195870125c9.png

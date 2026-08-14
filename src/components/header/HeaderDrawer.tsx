@@ -1,8 +1,8 @@
-import { menus } from '@/config.json'
 import { createContext, useContext, useState, forwardRef } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
+import { getMenuItems, t, type Locale } from '@/i18n'
 
 const contentVariants = {
   hidden: {
@@ -34,7 +34,7 @@ const menuItemVariants = {
   },
 }
 
-export function HeaderDrawer({ zIndex = 999 }: { zIndex?: number }) {
+export function HeaderDrawer({ zIndex = 999, locale }: { zIndex?: number; locale: Locale }) {
   const [isOpen, setIsOpen] = useState(false)
   const overlayZIndex = zIndex - 1
   const contentZIndex = zIndex
@@ -42,7 +42,7 @@ export function HeaderDrawer({ zIndex = 999 }: { zIndex?: number }) {
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
-        <TriggerButton />
+        <TriggerButton locale={locale} />
       </Dialog.Trigger>
 
       <AnimatePresence>
@@ -74,7 +74,7 @@ export function HeaderDrawer({ zIndex = 999 }: { zIndex?: number }) {
                     },
                   }}
                 >
-                  <DrawerContentImpl />
+                  <DrawerContentImpl locale={locale} />
                 </DrawerContext.Provider>
               </motion.div>
             </Dialog.Content>
@@ -85,13 +85,13 @@ export function HeaderDrawer({ zIndex = 999 }: { zIndex?: number }) {
   )
 }
 
-const TriggerButton = forwardRef<HTMLButtonElement>((props, ref) => {
+const TriggerButton = forwardRef<HTMLButtonElement, { locale: Locale }>(({ locale, ...props }, ref) => {
   return (
     <button
       ref={ref}
       className="size-9 rounded-full shadow-lg shadow-zinc-800/5 border border-primary bg-white/50 dark:bg-zinc-800/50 backdrop-blur"
       type="button"
-      aria-label="Open menu"
+      aria-label={t(locale, 'openMenu')}
       {...props}
     >
       <i className="iconfont icon-menu"></i>
@@ -99,8 +99,9 @@ const TriggerButton = forwardRef<HTMLButtonElement>((props, ref) => {
   )
 })
 
-function DrawerContentImpl() {
+function DrawerContentImpl({ locale }: { locale: Locale }) {
   const { dismiss } = useContext(DrawerContext)
+  const menus = getMenuItems(locale)
 
   return (
     <ul className="mt-8 pb-8 overflow-y-auto overflow-x-hidden min-h-0">

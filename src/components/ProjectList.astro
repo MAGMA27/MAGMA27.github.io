@@ -1,7 +1,14 @@
 ---
 import { getCollection } from 'astro:content'
+import { normalizeLocale, t, type Locale } from '@/i18n'
 
-const projects = await getCollection('projects')
+interface Props {
+  locale?: Locale
+}
+
+const { locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
+const projects = await getCollection('projects', ({ data }) => data.locale === locale)
 ---
 
 <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
@@ -14,7 +21,7 @@ const projects = await getCollection('projects')
               <img
                 class="size-full object-cover transition-transform group-hover:scale-110"
                 src={project.data.image}
-                alt={`Project cover: ${project.data.title}`}
+                alt={t(locale, 'projectCover', { value: project.data.title })}
                 loading="lazy"
               />
             </div>

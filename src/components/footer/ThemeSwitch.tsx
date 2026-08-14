@@ -1,7 +1,8 @@
 import { themeAtom } from '@/store/theme'
 import { useAtom } from 'jotai'
+import { t, type Locale } from '@/i18n'
 
-export function ThemeSwitch() {
+export function ThemeSwitch({ locale = 'zh-cn' }: { locale?: Locale }) {
   const [theme, setTheme] = useAtom(themeAtom)
 
   const left = { light: 4, system: 36, dark: 68 }[theme]
@@ -21,7 +22,7 @@ export function ThemeSwitch() {
         <button
           className="size-[32px] flex items-center justify-center"
           type="button"
-          aria-label="Switch to light theme"
+          aria-label={t(locale, 'themeLight')}
           onClick={() => setTheme('light')}
         >
           <i className="iconfont icon-sun"></i>
@@ -29,7 +30,7 @@ export function ThemeSwitch() {
         <button
           className="size-[32px] flex items-center justify-center"
           type="button"
-          aria-label="Switch to system theme"
+          aria-label={t(locale, 'themeSystem')}
           onClick={() => setTheme('system')}
         >
           <i className="iconfont icon-computer"></i>
@@ -37,7 +38,7 @@ export function ThemeSwitch() {
         <button
           className="size-[32px] flex items-center justify-center"
           type="button"
-          aria-label="Switch to dark theme"
+          aria-label={t(locale, 'themeDark')}
           onClick={() => setTheme('dark')}
         >
           <i className="iconfont icon-moon"></i>

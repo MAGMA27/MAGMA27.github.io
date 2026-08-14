@@ -9,22 +9,24 @@ import {
 import { BackToTopFAB } from '@/components/BackToTopFAB'
 import { ToastContainer } from '@/components/ToastContainer'
 import { ModalStack } from '@/components/ui/modal'
-import { site } from '@/config.json'
+import { localeHtmlLang, normalizeLocale, type Locale } from '@/i18n'
 import '@/styles/global.css'
 
 interface Props {
   title?: string
   description?: string
   image?: string
+  locale?: Locale
 }
 
-const { title, description, image } = Astro.props
+const { title, description, image, locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 <!doctype html>
-<html lang={site.lang}>
+<html lang={localeHtmlLang[locale]}>
   <head>
-    <CommonHead title={title} description={description} image={image} />
+    <CommonHead title={title} description={description} image={image} locale={locale} />
     <WebAnalytics />
     <ThemeLoader />
     <AccentColorInjector />
@@ -33,7 +35,7 @@ const { title, description, image } = Astro.props
   <body>
     <slot />
 
-    <BackToTopFAB client:only="react" />
+    <BackToTopFAB locale={locale} client:only="react" />
     <ToastContainer client:only="react" />
     <ModalStack client:only="react" />
   </body>

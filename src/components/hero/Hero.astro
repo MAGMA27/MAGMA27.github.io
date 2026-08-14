@@ -2,6 +2,14 @@
 import { hero, author } from '@/config.json'
 import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
+import { normalizeLocale, t, type Locale } from '@/i18n'
+
+interface Props {
+  locale?: Locale
+}
+
+const { locale: localeProp } = Astro.props
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 ---
 
 <div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px]">
@@ -25,7 +33,7 @@ import Highlight from '@/components/Highlight.astro'
 
     <div class="mt-10 lg:mt-0 lg:absolute inset-x-0 bottom-0 flex flex-col items-center">
       <p class="text-xs text-center text-balance text-secondary">
-        {hero.yiyan}
+        {t(locale, 'heroQuote')}
       </p>
       <div class="mt-7 text-xl animate-bounce">
         <i class="iconfont icon-down"></i>

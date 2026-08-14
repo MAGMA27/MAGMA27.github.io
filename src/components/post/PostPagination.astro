@@ -3,12 +3,15 @@ interface Props {
   current: number
   total: number
   getPageUrl: (page: number) => string
+  locale?: import('@/i18n').Locale
 }
 
-const { current, total, getPageUrl } = Astro.props
+const { current, total, getPageUrl, locale: localeProp } = Astro.props
+const { normalizeLocale, t } = await import('@/i18n')
+const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
 
 const items = []
-if (current > 1) items.push({ isButton: true, page: current - 1, icon: 'left', label: '上一页' })
+if (current > 1) items.push({ isButton: true, page: current - 1, icon: 'left', label: t(locale, 'previousPage') })
 if (current > 1) items.push({ isButton: true, page: 1 })
 if (current > 3) items.push({ isButton: false, icon: 'more' })
 if (current > 2) items.push({ isButton: true, page: current - 1 })
@@ -17,7 +20,7 @@ if (current < total - 1) items.push({ isButton: true, page: current + 1 })
 if (current < total - 2) items.push({ isButton: false, icon: 'more' })
 if (current < total) items.push({ isButton: true, page: total })
 if (current < total)
-  items.push({ isButton: true, page: current + 1, icon: 'right', label: '下一页' })
+  items.push({ isButton: true, page: current + 1, icon: 'right', label: t(locale, 'nextPage') })
 ---
 
 <div class="mt-12 flex items-center justify-center gap-2">
