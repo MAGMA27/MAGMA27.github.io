@@ -4,7 +4,7 @@ date: 2026-09-10T02:30:44.542Z
 tags: [LLM, agent, ai security]
 comments: false
 draft: false
-category: LLM
+category: agent
 ---
 
 # AI Agent Security
