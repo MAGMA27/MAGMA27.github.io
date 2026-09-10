@@ -38,5 +38,12 @@ const locale = normalizeLocale(localeProp ?? Astro.currentLocale)
     <BackToTopFAB locale={locale} client:only="react" />
     <ToastContainer client:only="react" />
     <ModalStack client:only="react" />
+
+    <script>
+      import { renderMermaid } from '@/scripts/mermaid'
+
+      renderMermaid()
+      document.addEventListener('swup:content:replace', () => renderMermaid())
+    </script>
   </body>
 </html>

@@ -23,6 +23,7 @@ export function rehypeCodeBlock() {
         'div',
         {
           class: 'code-block',
+          'data-language': lang,
         },
         [h('span', { class: 'lang-tag' }, lang), node],
       )

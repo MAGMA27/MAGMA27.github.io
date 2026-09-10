@@ -58,6 +58,14 @@
   @apply relative mt-10 mb-5 bg-secondary rounded-lg;
 }
 
+.markdown .mermaid-diagram {
+  @apply overflow-x-auto p-6;
+}
+
+.markdown .mermaid-diagram svg {
+  @apply block max-w-full h-auto mx-auto;
+}
+
 .markdown .lang-tag {
   @apply absolute right-6 -top-6 h-6 px-4 flex items-center rounded-t-lg bg-inherit text-sm;
 }
