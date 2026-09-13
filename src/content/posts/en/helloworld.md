@@ -6,7 +6,7 @@ date: 2026-08-14
 lastMod: 2026-08-14
 tags: [test]
 comments: false
-draft: false
+draft: True
 summary: A small English post used to verify the bilingual blog route.
 category: Test
 ---
