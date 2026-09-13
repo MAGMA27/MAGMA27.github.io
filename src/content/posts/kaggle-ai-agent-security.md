@@ -1,4 +1,5 @@
 ---
+translationKey: kaggle-ai-agent-security
 title: Kaggle AI Agent Security – Multi-Step Tool Attacks 赛后技术复盘。
 date: 2026-09-10T02:30:44.542Z
 tags: [LLM, agent, ai security]

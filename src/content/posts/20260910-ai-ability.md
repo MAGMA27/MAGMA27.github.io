@@ -1,4 +1,5 @@
 ---
+translationKey: 20260910-ai-ability
 title: AI 时代，真正应该培养的能力是什么
 date: 2026-09-10T08:14:52.234Z
 tags: [AI, LLM]

@@ -1,4 +1,5 @@
 ---
+translationKey: 20260520-windows-lerobot
 title: 如何在windows复现lerobot
 date: 2026-05-20T13:16:19.097Z
 tags: [embody, lerobot]
